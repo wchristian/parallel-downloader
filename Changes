@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.120101  2012-01-10 22:04:52 Europe/Berlin
     - documented the purpose of the module
 
 0.120100  2012-01-10 12:36:41 Europe/Berlin
