@@ -1,10 +1,56 @@
 =head1 NAME
 
-Parallel::Downloader
+Parallel::Downloader - simple downloading of multiple files at once
 
 =head1 VERSION
 
 version 0.000001
+
+=head1 SYNOPSIS
+
+    use HTTP::Request::Common qw( GET POST );
+    use Parallel::Downloader 'async_download';
+
+    # simple example
+    my @requests = map GET( "http://google.com" ), ( 1..15 );
+    my @responses = async_download( requests => \@requests );
+
+    # complex example
+    my @complex_reqs = ( ( map POST( "http://google.com", [ type_id => $_ ] ), ( 1..60 ) ),
+                       ( map POST( "http://yahoo.com", [ type_id => $_ ] ), ( 1..60 ) ) );
+
+    my $downloader = Parallel::Downloader->new(
+        requests => \@complex_reqs,
+        workers => 50,
+        conns_per_host => 12,
+        aehttp_args => {
+            timeout => 30,
+            on_prepare => sub {
+                print "download started ($AnyEvent::HTTP::ACTIVE / $AnyEvent::HTTP::MAX_PER_HOST)\n"
+            }
+        },
+        debug => 1,
+        logger => sub {
+            my ( $downloader, $message ) = @_;
+            print "downloader sez [$message->{type}]: $message->{msg}\n";
+        },
+    );
+    my @complex_responses = $downloader->run;
+
+=head1 FUNCTIONS
+
+=head2 async_download
+
+Can be requested to be exported, will instantiate a Parallel::Downloader
+object with the given parameters, run it and return the results.
+
+=head1 METHODS
+
+=head2 run
+
+Runs the downloads for the given parameters and returns an array of array
+references, each containing the decoded contents, the headers and the
+HTTP::Request object.
 
 =for :stopwords cpan testmatrix url annocpan anno bugtracker rt cpants kwalitee diff irc mailto metadata placeholders
 

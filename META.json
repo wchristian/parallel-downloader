@@ -1,5 +1,5 @@
 {
-   "abstract" : "#",
+   "abstract" : "simple downloading of multiple files at once",
    "author" : [
       "Christian Walde <walde.christian@googlemail.com>"
    ],
@@ -32,6 +32,10 @@
       },
       "runtime" : {
          "requires" : {
+            "AnyEvent::HTTP" : 0,
+            "Moo" : 0,
+            "MooX::Types::MooseLike" : 0,
+            "Sub::Exporter::Simple" : 0,
             "perl" : "5.006",
             "strictures" : 0
          }
@@ -40,6 +44,7 @@
          "requires" : {
             "File::Find" : 0,
             "File::Temp" : 0,
+            "HTTP::Request::Common" : 0,
             "Test::InDistDir" : 0,
             "Test::More" : 0,
             "strict" : 0,
