@@ -4,7 +4,7 @@ Parallel::Downloader - simply download multiple files at once
 
 =head1 VERSION
 
-version 0.120101
+version 0.120102
 
 =head1 SYNOPSIS
 

@@ -2,6 +2,9 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+0.120102  2012-01-10 23:50:40 Europe/Berlin
+    - shortened abstract
+
 0.120101  2012-01-10 22:04:52 Europe/Berlin
     - documented the purpose of the module
 
