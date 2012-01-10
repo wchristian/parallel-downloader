@@ -37,6 +37,25 @@ version 0.120100
     );
     my @complex_responses = $downloader->run;
 
+=head1 DESCRIPTION
+
+This is not a library to build a parallel downloader on top of. It is a
+downloading client build on top of AnyEvent::HTTP.
+
+Its goal is not to be better, faster, or smaller than anything else. Its goal is
+to provide the user with a single function they can call with a bunch of HTTP
+requests and which gives them the responses for them with as little fuss as
+possible and most importantly, without downloading them in sequence.
+
+It handles the busywork of grouping requests by hosts and limiting the amount of
+simultaneous requests per host, separate from capping the amount of overall
+connections. This allows the user to maximize their own connection without
+abusing remote hosts.
+
+Of course, there are facilities to customize the exact limits employed and to
+add logging and such; but C<async_download> is the premier piece of API and
+should be enough for most uses.
+
 =head1 FUNCTIONS
 
 =head2 async_download

@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+    - documented the purpose of the module
 
 0.120100  2012-01-10 12:36:41 Europe/Berlin
     - first release
