@@ -4,7 +4,7 @@ package Parallel::Downloader;
 
 # VERSION
 
-# ABSTRACT: simple downloading of multiple files at once
+# ABSTRACT: simply download multiple files at once
 
 # COPYRIGHT
 

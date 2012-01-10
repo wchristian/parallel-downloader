@@ -1,6 +1,6 @@
 =head1 NAME
 
-Parallel::Downloader - simple downloading of multiple files at once
+Parallel::Downloader - simply download multiple files at once
 
 =head1 VERSION
 
