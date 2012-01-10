@@ -1,0 +1,39 @@
+=head1 NAME
+
+Parallel::Downloader
+
+=head1 VERSION
+
+version 0.000001
+
+=for :stopwords cpan testmatrix url annocpan anno bugtracker rt cpants kwalitee diff irc mailto metadata placeholders
+
+=head1 SUPPORT
+
+=head2 Bugs / Feature Requests
+
+Please report any bugs or feature requests through the issue tracker
+at L<http://rt.cpan.org/Public/Dist/Display.html?Name=Parallel-Downloader>.
+You will be notified automatically of any progress on your issue.
+
+=head2 Source Code
+
+This is open source software.  The code repository is available for
+public review and contribution under the terms of the license.
+
+L<https://github.com/wchristian/parallel-downloader>
+
+  git clone https://github.com/wchristian/parallel-downloader.git
+
+=head1 AUTHOR
+
+Christian Walde <walde.christian@googlemail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2012 by Christian Walde.
+
+This is free software, licensed under:
+
+  DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE, Version 2, December 2004
+
