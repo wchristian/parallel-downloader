@@ -2,6 +2,9 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+0.120120  2012-01-12 12:16:26 Europe/Berlin
+    - switched to CC0 license
+
 0.120102  2012-01-10 23:50:40 Europe/Berlin
     - shortened abstract
 
