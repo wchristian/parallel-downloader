@@ -84,7 +84,50 @@ use Sub::Exporter::Simple 'async_download';
 =head2 async_download
 
 Can be requested to be exported, will instantiate a Parallel::Downloader
-object with the given parameters, run it and return the results.
+object with the given parameters, run it and return the results. Its
+parameters are as follows:
+
+=head3 requests (required)
+
+Reference to an array of HTTP::Request objects, all of which will be
+downloaded.
+
+=head3 aehttp_args
+
+A reference to a hash containing arguments that will be passed to
+AnyEvent::HTTP::http_request.
+
+Default is an empty hashref.
+
+=head3 conns_per_host
+
+Sets the number of connections allowed per host by changing the
+corresponding AnyEvent::HTTP package variable.
+
+Default is '4'.
+
+=head3 debug
+
+A boolean that determines whether logging operations are a NOP or
+actually run. Set to 1 to activate the logging.
+
+Default is '0'.
+
+=head3 logger
+
+A reference to a sub that will received a hash containing logging
+information. Whether that sub then prints them to screen or into a
+database or other targets is up to the user.
+
+Default is a sub that prints to the screen.
+
+=head3 workers
+
+The amount of workers to be used for downloading. Useful for
+controlling the global amount of connections your machine will try
+to establish.
+
+Default is '10'.
 
 =cut
 
