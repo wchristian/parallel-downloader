@@ -34,8 +34,8 @@
          "requires" : {
             "AnyEvent::HTTP" : 0,
             "Moo" : 0,
-            "MooX::Types::MooseLike" : 0,
             "Sub::Exporter::Simple" : 0,
+            "MooX::Types::MooseLike" : "0.03",
             "perl" : "5.006",
             "strictures" : 0
          }

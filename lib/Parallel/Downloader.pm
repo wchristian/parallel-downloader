@@ -61,7 +61,7 @@ should be enough for most uses.
 =cut
 
 use Moo;
-use MooX::Types::MooseLike qw( Bool Int HashRef CodeRef ArrayRef );
+use MooX::Types::MooseLike::Base qw( Bool Int HashRef CodeRef ArrayRef );
 
 sub {
     has requests => ( is => 'ro', isa => ArrayRef, required => 1, coerce => \&_interleave_by_host );
