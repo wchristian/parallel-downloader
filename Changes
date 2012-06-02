@@ -2,6 +2,10 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+0.121540  2012-06-02 21:27:11 Europe/Berlin
+    - updated requirement on type provider module
+    - documented the object attributes
+
 0.120120  2012-01-12 12:16:26 Europe/Berlin
     - switched to CC0 license
 

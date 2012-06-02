@@ -4,7 +4,7 @@ Parallel::Downloader - simply download multiple files at once
 
 =head1 VERSION
 
-version 0.120120
+version 0.121540
 
 =head1 SYNOPSIS
 
@@ -114,7 +114,7 @@ Runs the downloads for the given parameters and returns an array of array
 references, each containing the decoded contents, the headers and the
 HTTP::Request object.
 
-=for :stopwords cpan testmatrix url annocpan anno bugtracker rt cpants kwalitee diff irc mailto metadata placeholders
+=for :stopwords cpan testmatrix url annocpan anno bugtracker rt cpants kwalitee diff irc mailto metadata placeholders metacpan
 
 =head1 SUPPORT
 
