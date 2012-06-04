@@ -83,14 +83,13 @@ use Sub::Exporter::Simple 'async_download';
 
 =head2 async_download
 
-Can be requested to be exported, will instantiate a Parallel::Downloader
-object with the given parameters, run it and return the results. Its
-parameters are as follows:
+Can be requested to be exported, will instantiate a Parallel::Downloader object
+with the given parameters, run it and return the results. Its parameters are as
+follows:
 
 =head3 requests (required)
 
-Reference to an array of HTTP::Request objects, all of which will be
-downloaded.
+Reference to an array of HTTP::Request objects, all of which will be downloaded.
 
 =head3 aehttp_args
 
@@ -101,31 +100,30 @@ Default is an empty hashref.
 
 =head3 conns_per_host
 
-Sets the number of connections allowed per host by changing the
-corresponding AnyEvent::HTTP package variable.
+Sets the number of connections allowed per host by changing the corresponding
+AnyEvent::HTTP package variable.
 
 Default is '4'.
 
 =head3 debug
 
-A boolean that determines whether logging operations are a NOP or
-actually run. Set to any true value to activate the logging.
+A boolean that determines whether logging operations are a NOP or actually run.
+Set to any true value to activate the logging.
 
 Default is '0'.
 
 =head3 logger
 
-A reference to a sub that will receive a hash containing logging
-information. Whether that sub then prints them to screen or into a
-database or other targets is up to the user.
+A reference to a sub that will receive a hash containing logging information.
+Whether that sub then prints them to screen or into a database or other targets
+is up to the user.
 
 Default is a sub that prints to the screen.
 
 =head3 workers
 
-The amount of workers to be used for downloading. Useful for
-controlling the global amount of connections your machine will try
-to establish.
+The amount of workers to be used for downloading. Useful for controlling the
+global amount of connections your machine will try to establish.
 
 Default is '10'.
 
