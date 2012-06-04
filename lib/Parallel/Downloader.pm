@@ -70,6 +70,7 @@ sub {
     has aehttp_args    => ( is => 'ro', isa => HashRef, default => sub { {} } );
     has debug          => ( is => 'ro', isa => Bool,    default => sub { 0 } );
     has logger         => ( is => 'ro', isa => CodeRef, default => sub { \&_default_log } );
+    has build_response => ( is => 'ro', isa => CodeRef, default => sub { \&_default_build_response } );
 
     has _responses => ( is => 'ro', isa => ArrayRef, default => sub { [] } );
     has _cv => ( is => 'ro', isa => sub { $_[0]->isa( 'AnyEvent::CondVar' ) }, default => sub { AnyEvent->condvar } );
@@ -126,6 +127,15 @@ The amount of workers to be used for downloading. Useful for controlling the
 global amount of connections your machine will try to establish.
 
 Default is '10'.
+
+=head3 build_response
+
+A reference to a sub that will be called on completion of a request to build the
+response variable that will be returned for this request. It receives as
+parameters the body of the response, a hash ref of the response headers and the
+original request.
+
+Default is a sub that returns the parameters wrapped in an array reference.
 
 =cut
 
@@ -217,7 +227,7 @@ sub _make_post_download_sub {
     my ( $self, $worker_id, $req ) = @_;
 
     my $post_download_sub = sub {
-        push @{ $self->_responses }, [ @_, $req ];
+        push @{ $self->_responses }, $self->build_response->( @_, $req );
 
         my $host_name = $req->uri->host;
         $self->_log(
@@ -232,6 +242,11 @@ sub _make_post_download_sub {
     };
 
     return $post_download_sub;
+}
+
+sub _default_build_response {
+    my ( $body, $hdr, $req ) = @_;
+    return [ $body, $hdr, $req ];
 }
 
 sub _end_worker {
