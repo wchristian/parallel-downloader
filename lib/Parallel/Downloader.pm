@@ -115,7 +115,7 @@ Default is '0'.
 
 =head3 logger
 
-A reference to a sub that will received a hash containing logging
+A reference to a sub that will receive a hash containing logging
 information. Whether that sub then prints them to screen or into a
 database or other targets is up to the user.
 
