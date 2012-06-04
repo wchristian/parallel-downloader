@@ -2,6 +2,11 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+0.121560  2012-06-04 13:48:22 Europe/Berlin
+    - doc fixes
+	- added build response object parameter to enable customization of
+      post-request actions
+
 0.121540  2012-06-02 21:27:11 Europe/Berlin
     - updated requirement on type provider module
     - documented the object attributes
