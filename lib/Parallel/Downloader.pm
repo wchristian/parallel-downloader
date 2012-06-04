@@ -109,7 +109,7 @@ Default is '4'.
 =head3 debug
 
 A boolean that determines whether logging operations are a NOP or
-actually run. Set to 1 to activate the logging.
+actually run. Set to any true value to activate the logging.
 
 Default is '0'.
 
