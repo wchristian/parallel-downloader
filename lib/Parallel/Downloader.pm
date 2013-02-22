@@ -71,6 +71,7 @@ sub {
     has debug          => ( is => 'ro', isa => Bool,    default => sub { 0 } );
     has logger         => ( is => 'ro', isa => CodeRef, default => sub { \&_default_log } );
     has build_response => ( is => 'ro', isa => CodeRef, default => sub { \&_default_build_response } );
+    has sorted         => ( is => 'ro', isa => Bool,    default => sub { 1 } );
 
     has _responses => ( is => 'ro', isa => ArrayRef, default => sub { [] } );
     has _cv => ( is => 'ro', isa => sub { $_[0]->isa( 'AnyEvent::CondVar' ) }, default => sub { AnyEvent->condvar } );
@@ -137,6 +138,15 @@ original request.
 
 Default is a sub that returns the parameters wrapped in an array reference.
 
+=head3 sorted
+
+A boolean that determines whether the returned responses are sorted in the same
+order as the input requests. Can be useful to disable if build_response was
+overridden to not return an array or not return the request as the third element
+of the response array.
+
+Default is '1'.
+
 =cut
 
 sub async_download {
@@ -190,13 +200,18 @@ sub run {
 
     $self->_cv->recv;
 
-    return @{ $self->_responses };
+    return @{ $self->_responses } if !$self->sorted;
+
+    my %unsorted = map { 0 + $_->[2] => $_ } @{ $self->_responses };
+    my @sorted = map { $unsorted{ 0 + $_ } } @{ $self->requests };
+
+    return @sorted;
 }
 
 sub _add_request {
     my ( $self, $worker_id, $requests ) = @_;
 
-    my $req = shift @{ $requests };
+    my $req = shift @{$requests};
     return $self->_end_worker( $worker_id ) if !$req;
 
     my $post_download_sub = $self->_make_post_download_sub( $worker_id, $req );
