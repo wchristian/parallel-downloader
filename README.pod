@@ -4,7 +4,7 @@ Parallel::Downloader - simply download multiple files at once
 
 =head1 VERSION
 
-version 0.121560
+version 0.130530
 
 =head1 SYNOPSIS
 
@@ -112,6 +112,15 @@ parameters the body of the response, a hash ref of the response headers and the
 original request.
 
 Default is a sub that returns the parameters wrapped in an array reference.
+
+=head3 sorted
+
+A boolean that determines whether the returned responses are sorted in the same
+order as the input requests. Can be useful to disable if build_response was
+overridden to not return an array or not return the request as the third element
+of the response array.
+
+Default is '1'.
 
 =head1 METHODS
 

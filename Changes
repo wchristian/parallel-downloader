@@ -2,6 +2,11 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+0.130530  2013-02-22 16:28:51 Europe/Berlin
+    - sort responses by default and provide option to disable sorting
+    - don't consume the input array while downloading
+    - restrict changes to package variables to scope of downloading process
+
 0.121560  2012-06-04 13:48:22 Europe/Berlin
     - doc fixes
 	- added build response object parameter to enable customization of
