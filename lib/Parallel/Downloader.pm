@@ -180,10 +180,12 @@ sub run {
 
     local $AnyEvent::HTTP::MAX_PER_HOST = $self->conns_per_host;
 
+    my @consumable_list = @{ $self->requests };
+
     for ( 1 .. $self->_sanitize_worker_max ) {
         $self->_cv->begin;
         $self->_log( msg => "$_ started", type => "WorkerStart", worker_id => $_ );
-        $self->_add_request( $_ );
+        $self->_add_request( $_, \@consumable_list );
     }
 
     $self->_cv->recv;
@@ -192,9 +194,9 @@ sub run {
 }
 
 sub _add_request {
-    my ( $self, $worker_id ) = @_;
+    my ( $self, $worker_id, $requests ) = @_;
 
-    my $req = shift @{ $self->requests };
+    my $req = shift @{ $requests };
     return $self->_end_worker( $worker_id ) if !$req;
 
     my $post_download_sub = $self->_make_post_download_sub( $worker_id, $req );
