@@ -66,7 +66,7 @@ use MooX::Types::MooseLike::Base qw( Bool Int HashRef CodeRef ArrayRef );
 sub {
     has requests => ( is => 'ro', isa => ArrayRef, required => 1, coerce => \&_interleave_by_host );
     has workers        => ( is => 'ro', isa => Int,     default => sub { 10 } );
-    has conns_per_host => ( is => 'ro', isa => Int,     default => sub { 4 }, trigger => \&_init_workers_per_host );
+    has conns_per_host => ( is => 'ro', isa => Int,     default => sub { 4 } );
     has aehttp_args    => ( is => 'ro', isa => HashRef, default => sub { {} } );
     has debug          => ( is => 'ro', isa => Bool,    default => sub { 0 } );
     has logger         => ( is => 'ro', isa => CodeRef, default => sub { \&_default_log } );
@@ -143,12 +143,6 @@ sub async_download {
     return __PACKAGE__->new( @_ )->run;
 }
 
-sub _init_workers_per_host {
-    my ( undef, $limit ) = @_;
-    $AnyEvent::HTTP::MAX_PER_HOST = $limit;
-    return;
-}
-
 sub _interleave_by_host {
     my ( $requests ) = @_;
 
@@ -183,6 +177,8 @@ HTTP::Request object.
 
 sub run {
     my ( $self ) = @_;
+
+    local $AnyEvent::HTTP::MAX_PER_HOST = $self->conns_per_host;
 
     for ( 1 .. $self->_sanitize_worker_max ) {
         $self->_cv->begin;
