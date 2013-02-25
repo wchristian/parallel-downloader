@@ -2,6 +2,9 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+0.130560  2013-02-25 12:56:39 Europe/Berlin
+    - fixed response order by preventing changes to request order on creation
+
 0.130530  2013-02-22 16:28:51 Europe/Berlin
     - sort responses by default and provide option to disable sorting
     - don't consume the input array while downloading
