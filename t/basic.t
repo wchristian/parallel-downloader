@@ -17,7 +17,7 @@ sub run {
       async_download( requests => [ map GET( $_ ), qw( http://google.de http://google.com http://website.broke  ) ] );
 
     is( $results[$_][1]{Status}, 200 ) for ( 0, 1 );
-    is( $results[2][0]{Status}, undef );
+    is( $results[2][0], undef );
 
     return;
 }
