@@ -64,14 +64,14 @@ use Moo;
 use MooX::Types::MooseLike::Base qw( Bool Int HashRef CodeRef ArrayRef );
 
 sub {
-    has requests => ( is => 'ro', isa => ArrayRef, required => 1, coerce => \&_interleave_by_host );
-    has workers        => ( is => 'ro', isa => Int,     default => sub { 10 } );
-    has conns_per_host => ( is => 'ro', isa => Int,     default => sub { 4 } );
-    has aehttp_args    => ( is => 'ro', isa => HashRef, default => sub { {} } );
-    has debug          => ( is => 'ro', isa => Bool,    default => sub { 0 } );
-    has logger         => ( is => 'ro', isa => CodeRef, default => sub { \&_default_log } );
-    has build_response => ( is => 'ro', isa => CodeRef, default => sub { \&_default_build_response } );
-    has sorted         => ( is => 'ro', isa => Bool,    default => sub { 1 } );
+    has requests       => ( is => 'ro', isa => ArrayRef, required => 1 );
+    has workers        => ( is => 'ro', isa => Int,      default  => sub { 10 } );
+    has conns_per_host => ( is => 'ro', isa => Int,      default  => sub { 4 } );
+    has aehttp_args    => ( is => 'ro', isa => HashRef,  default  => sub { {} } );
+    has debug          => ( is => 'ro', isa => Bool,     default  => sub { 0 } );
+    has logger         => ( is => 'ro', isa => CodeRef,  default  => sub { \&_default_log } );
+    has build_response => ( is => 'ro', isa => CodeRef,  default  => sub { \&_default_build_response } );
+    has sorted         => ( is => 'ro', isa => Bool,     default  => sub { 1 } );
 
     has _responses => ( is => 'ro', isa => ArrayRef, default => sub { [] } );
     has _cv => ( is => 'ro', isa => sub { $_[0]->isa( 'AnyEvent::CondVar' ) }, default => sub { AnyEvent->condvar } );
@@ -153,11 +153,11 @@ sub async_download {
     return __PACKAGE__->new( @_ )->run;
 }
 
-sub _interleave_by_host {
-    my ( $requests ) = @_;
+sub _requests_interleaved_by_host {
+    my ( $self, $requests ) = @_;
 
     my %hosts;
-    for ( @{$requests} ) {
+    for ( @{ $self->requests } ) {
         my $host_name = $_->uri->host;
         my $host = $hosts{$host_name} ||= [];
         push @{$host}, $_;
@@ -190,12 +190,12 @@ sub run {
 
     local $AnyEvent::HTTP::MAX_PER_HOST = $self->conns_per_host;
 
-    my @consumable_list = @{ $self->requests };
+    my $consumable_list = $self->_requests_interleaved_by_host;
 
     for ( 1 .. $self->_sanitize_worker_max ) {
         $self->_cv->begin;
         $self->_log( msg => "$_ started", type => "WorkerStart", worker_id => $_ );
-        $self->_add_request( $_, \@consumable_list );
+        $self->_add_request( $_, $consumable_list );
     }
 
     $self->_cv->recv;
