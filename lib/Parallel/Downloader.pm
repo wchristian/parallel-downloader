@@ -192,13 +192,16 @@ sub run {
 
     my $consumable_list = $self->_requests_interleaved_by_host;
 
-    for ( 1 .. $self->_sanitize_worker_max ) {
-        $self->_cv->begin;
-        $self->_log( msg => "$_ started", type => "WorkerStart", worker_id => $_ );
-        $self->_add_request( $_, $consumable_list );
-    }
+    while ( @{$consumable_list} ) {
+        $self->_cv = AnyEvent->condvar;
+        for ( 1 .. $self->_sanitize_worker_max ) {
+            $self->_cv->begin;
+            $self->_log( msg => "$_ started", type => "WorkerStart", worker_id => $_ );
+            $self->_add_request( $_, $consumable_list );
+        }
 
-    $self->_cv->recv;
+        $self->_cv->recv;
+    }
 
     return @{ $self->_responses } if !$self->sorted;
 
