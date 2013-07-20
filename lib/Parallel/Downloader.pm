@@ -74,7 +74,7 @@ sub {
     has sorted         => ( is => 'ro', isa => Bool,     default  => sub { 1 } );
 
     has _responses => ( is => 'ro', isa => ArrayRef, default => sub { [] } );
-    has _cv => ( is => 'ro', isa => sub { $_[0]->isa( 'AnyEvent::CondVar' ) }, default => sub { AnyEvent->condvar } );
+    has _cv => ( is => 'ro', writer => '_set_cv', isa => sub { $_[0]->isa( 'AnyEvent::CondVar' ) }, default => sub { AnyEvent->condvar } );
   }
   ->();
 
@@ -193,7 +193,7 @@ sub run {
     my $consumable_list = $self->_requests_interleaved_by_host;
 
     while ( @{$consumable_list} ) {
-        $self->_cv = AnyEvent->condvar;
+        $self->_set_cv( AnyEvent->condvar );
         for ( 1 .. $self->_sanitize_worker_max ) {
             $self->_cv->begin;
             $self->_log( msg => "$_ started", type => "WorkerStart", worker_id => $_ );
