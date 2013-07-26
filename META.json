@@ -4,7 +4,7 @@
       "Christian Walde <walde.christian@googlemail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.300029, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "Dist::Zilla version 4.300034, CPAN::Meta::Converter version 2.120921",
    "license" : [
       "unrestricted"
    ],
@@ -63,7 +63,7 @@
    "provides" : {
       "Parallel::Downloader" : {
          "file" : "lib/Parallel/Downloader.pm",
-         "version" : "0.130560"
+         "version" : "0.132070"
       }
    },
    "release_status" : "stable",
@@ -79,6 +79,6 @@
          "web" : "https://github.com/wchristian/parallel-downloader"
       }
    },
-   "version" : "0.130560"
+   "version" : "0.132070"
 }
 

@@ -2,6 +2,9 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+0.132070  2013-07-26 14:11:58 Europe/Berlin
+    - fix issue of too few workers not processing all requests
+
 0.130560  2013-02-25 12:56:39 Europe/Berlin
     - fixed response order by preventing changes to request order on creation
 
