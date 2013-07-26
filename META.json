@@ -63,7 +63,7 @@
    "provides" : {
       "Parallel::Downloader" : {
          "file" : "lib/Parallel/Downloader.pm",
-         "version" : "0.132070"
+         "version" : "0.132071"
       }
    },
    "release_status" : "stable",
@@ -79,6 +79,6 @@
          "web" : "https://github.com/wchristian/parallel-downloader"
       }
    },
-   "version" : "0.132070"
+   "version" : "0.132071"
 }
 

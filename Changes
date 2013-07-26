@@ -2,6 +2,9 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+0.132071  2013-07-26 15:20:09 Europe/Berlin
+    - test doesn't touch network anymore
+
 0.132070  2013-07-26 14:11:58 Europe/Berlin
     - fix issue of too few workers not processing all requests
 
