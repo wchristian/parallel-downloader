@@ -73,6 +73,8 @@ sub {
     has build_response => ( is => 'ro', isa => CodeRef,  default  => sub { \&_default_build_response } );
     has sorted         => ( is => 'ro', isa => Bool,     default  => sub { 1 } );
 
+    has _consumables => ( is => 'lazy', isa => ArrayRef, builder => '_requests_interleaved_by_host' );
+
     has _responses => ( is => 'ro', isa => ArrayRef, default => sub { [] } );
     has _cv => ( is => 'ro', isa => sub { $_[0]->isa( 'AnyEvent::CondVar' ) }, default => sub { AnyEvent->condvar } );
   }
@@ -190,12 +192,10 @@ sub run {
 
     local $AnyEvent::HTTP::MAX_PER_HOST = $self->conns_per_host;
 
-    my $consumable_list = $self->_requests_interleaved_by_host;
-
     for ( 1 .. $self->_sanitize_worker_max ) {
         $self->_cv->begin;
         $self->_log( msg => "$_ started", type => "WorkerStart", worker_id => $_ );
-        $self->_add_request( $_, $consumable_list );
+        $self->_add_request( $_ );
     }
 
     $self->_cv->recv;
@@ -209,9 +209,9 @@ sub run {
 }
 
 sub _add_request {
-    my ( $self, $worker_id, $requests ) = @_;
+    my ( $self, $worker_id ) = @_;
 
-    my $req = shift @{$requests};
+    my $req = shift @{ $self->_consumables };
     return $self->_end_worker( $worker_id ) if !$req;
 
     my $post_download_sub = $self->_make_post_download_sub( $worker_id, $req );
